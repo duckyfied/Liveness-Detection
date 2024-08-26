@@ -1,3 +1,11 @@
+torch
+facenet-pytorch
+onnx
+onnxruntime
+onnxsim
+numpy
+opencv-python
+
 absl-py==2.1.0
 attrs==24.2.0
 cffi==1.17.0
