@@ -1,6 +1,6 @@
 # **Face Liveness Detection Application**
 
-This project is a web-based face liveness detection application built with React, TensorFlow.js, and ONNX models. The application ensures that the face being authenticated is live and not a spoof (e.g., a photo or video).
+This project is a web based face liveness detection application built with React, TensorFlow.js, and ONNX models. The application ensures that the face being authenticated is live and not a spoof (e.g., a photo or video).
 
 ## **Features**
 
