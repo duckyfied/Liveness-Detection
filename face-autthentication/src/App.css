@@ -1,38 +1,77 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 100vh;
+  background-color: #282c34;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.Webcam-container {
+  position: relative;
+  width: 80vw;
+  max-width: 640px;
+  height: 60vh;
+  max-height: 480px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Webcam {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.Face-overlay-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.7);
+  mask-image: radial-gradient(
+    ellipse 30% 80% at center,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.7) 30%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 50% 150% at center,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.7) 30%
+  );
+}
+
+.Face-overlay {
+  position: absolute;
+  width: 30%;
+  height: 80%;
+  /*border: 3px solid green; /* Oval border with semi-transparent color */
+  border-radius: 50%;
+  background-color: transparent;
+  z-index: 1;
+}
+
+.Capture-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #0000ff;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.Capture-button:hover {
+  background-color: #0000cc;
 }
