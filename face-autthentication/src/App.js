@@ -1,10 +1,10 @@
-import React, { useRef, useState, useEffect } from 'react';
-import * as ort from 'onnxruntime-web';
-import Webcam from 'react-webcam';
-import './App.css';
+import React, { useRef, useState, useEffect } from "react";
+import * as ort from "onnxruntime-web";
+import Webcam from "react-webcam";
+import "./App.css";
 
-const MODEL_URL = '/model/facenet_simplified.onnx';
-const EMBEDDING_PATH = '/model/pre_existing_embedding.json';
+const MODEL_URL = "/model/facenet_simplified.onnx";
+const EMBEDDING_PATH = "/model/pre_existing_embedding.json";
 
 function App() {
   const [model, setModel] = useState(null);
@@ -13,7 +13,7 @@ function App() {
   const [authenticatedName, setAuthenticatedName] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [inLiveMode, setInLiveMode] = useState(false);
-  const [authenticationMessage, setAuthenticationMessage] = useState('');
+  const [authenticationMessage, setAuthenticationMessage] = useState("");
 
   useEffect(() => {
     const loadModel = async () => {
@@ -31,8 +31,8 @@ function App() {
   }, []);
 
   const preprocessImage = (image) => {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
     canvas.width = 160;
     canvas.height = 160;
     ctx.drawImage(image, 0, 0, 160, 160);
@@ -45,7 +45,7 @@ function App() {
       data[i + 160 * 160 * 2] = imgData.data[i * 4 + 2] / 255.0; // B
     }
 
-    return new ort.Tensor('float32', data, [1, 3, 160, 160]);
+    return new ort.Tensor("float32", data, [1, 3, 160, 160]);
   };
 
   const compareEmbeddings = (embedding1, embedding2) => {
@@ -68,7 +68,10 @@ function App() {
     let name = null;
 
     storedEmbeddings.forEach((storedEmbedding) => {
-      const similarity = compareEmbeddings(newEmbedding, storedEmbedding.embedding);
+      const similarity = compareEmbeddings(
+        newEmbedding,
+        storedEmbedding.embedding
+      );
       if (similarity > maxSimilarity) {
         maxSimilarity = similarity;
         name = storedEmbedding.name;
@@ -92,17 +95,16 @@ function App() {
 
           const { similarity, name } = checkSimilarity(newEmbedding);
 
-          if (similarity > 0.1) { 
+          if (similarity > 0.1) {
             setAuthenticatedName(name);
             setAuthenticationMessage(`User Found: ${name}`);
           } else {
             setAuthenticatedName(null);
-            setAuthenticationMessage('Not Authenticated');
+            setAuthenticationMessage("Not Authenticated");
           }
 
           // Transition to live mode
           setInLiveMode(true);
-
         } catch (error) {
           console.error("Error running inference:", error);
         }
@@ -125,7 +127,6 @@ function App() {
             const newEmbedding = results.output.data;
 
             checkSimilarity(newEmbedding);
-
           } catch (error) {
             console.error("Error running inference:", error);
           }
@@ -135,7 +136,7 @@ function App() {
     };
 
     if (inLiveMode) {
-      const intervalId = setInterval(processFrame, 1000); 
+      const intervalId = setInterval(processFrame, 1000);
       return () => clearInterval(intervalId);
     }
   }, [model, storedEmbeddings, inLiveMode, isProcessing]);
@@ -143,23 +144,26 @@ function App() {
   return (
     <div className="App">
       <h1>Face Authentication</h1>
-      {authenticatedName && !inLiveMode && (
-        <h2>{authenticatedName}</h2>
-      )}
-      <Webcam
-        audio={false}
-        ref={webcamRef}
-        screenshotFormat="image/jpeg"
-        width={320}
-        height={240}
-      />
+      <div className="Webcam-container">
+        <Webcam
+          audio={false}
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+          className="Webcam"
+        />
+        <div className="Face-overlay-container">
+          <div className="Face-overlay"></div>
+        </div>
+      </div>
       <div>
         {!inLiveMode && (
           <>
-            <button onClick={handleCaptureAndCheck}>Capture Image and Check</button>
+            <button className="Capture-button" onClick={handleCaptureAndCheck}>
+              Capture Image and Check
+            </button>
             <h3>Capture Image to find USER</h3>
-            {authenticationMessage && authenticatedName  && (
-              <div>                
+            {authenticationMessage && authenticatedName && (
+              <div>
                 <h2>{authenticationMessage}</h2>
               </div>
             )}
@@ -169,7 +173,6 @@ function App() {
           <div>
             <h3>Welcome, {authenticatedName}</h3>
             <h2>Live Video Mode</h2>
-            
             <p>Your Live Video is being captured</p>
           </div>
         )}
