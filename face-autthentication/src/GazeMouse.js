@@ -1,30 +1,38 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function GazeMouse() {
   const [gazePosition, setGazePosition] = useState({ x: 0, y: 0 });
   const [points, setPoints] = useState([
-    { x: 100, y: 100, checked: false, clicked: false },
-    { x: 300, y: 100, checked: false, clicked: false },
-    { x: 100, y: 300, checked: false, clicked: false },
-    { x: 300, y: 300, checked: false, clicked: false },
+    { x: 400, y: 300, checked: false, clicked: false },
+    { x: 1100, y: 300, checked: false, clicked: false },
+    { x: 400, y: 750, checked: false, clicked: false },
+    { x: 1100, y: 750, checked: false, clicked: false },
   ]);
   const [live, setLive] = useState(false);
-
   useEffect(() => {
     const webgazer = window.webgazer;
 
     if (webgazer) {
-      webgazer.setGazeListener((data) => {
-        if (data) {
-          setGazePosition({ x: data.x, y: data.y });
-        }
-      }).begin();
+      webgazer
+        .setRegression('ridge')
+        .setGazeListener((data, clock) => {
+          if (data) {
+            setGazePosition({ x: data.x, y: data.y });
+          }
+        })
+        .begin();
+
+      webgazer.applyKalmanFilter(false);
+      webgazer.setTracker('clmtrackr');
+      webgazer.showFaceOverlay(false);
+      webgazer.showFaceFeedbackBox(false);
+      //webgazer.showPredictionPoints(false);
     }
 
     return () => {
-      if (webgazer && typeof webgazer.clearGazeListener === 'function') {
+      if (webgazer) {
         webgazer.clearGazeListener();
-        //webgazer.close();
+        webgazer.pause();
       }
     };
   }, []);
@@ -35,12 +43,12 @@ function GazeMouse() {
       Math.pow(point.x - gazePosition.x, 2) + Math.pow(point.y - gazePosition.y, 2)
     );
 
-    if (distance < 120) { 
+    if (distance < 120) {
       const newPoints = [...points];
       newPoints[index].clicked = true;
       setPoints(newPoints);
 
-      const checkedPoints = newPoints.filter(p => p.clicked).length;
+      const checkedPoints = newPoints.filter((p) => p.clicked).length;
       if (checkedPoints >= 2) {
         setLive(true);
       }
@@ -48,8 +56,8 @@ function GazeMouse() {
   };
 
   return (
-    <div className="GazeMouse" style={{ position: 'relative', width: '100vw', height: '100vh' }}>
-      
+    <div className="GazeMouse">
+      <div id="webgazerVideoContainer" className="webgazer-container"></div>
       {points.map((point, index) => (
         <div
           key={index}
@@ -63,8 +71,8 @@ function GazeMouse() {
             height: '20px',
             borderRadius: '50%',
             transform: 'translate(-50%, -50%)',
-            zIndex: 2, 
-            cursor: 'pointer'
+            zIndex: 2,
+            cursor: 'pointer',
           }}
           onClick={() => handleClick(index)}
         ></div>
@@ -82,7 +90,7 @@ function GazeMouse() {
             borderRadius: '10px',
             color: '#fff',
             fontSize: '18px',
-            zIndex: 3, 
+            zIndex: 3,
           }}
         >
           User is live!
