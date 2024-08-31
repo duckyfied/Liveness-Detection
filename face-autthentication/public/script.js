@@ -9,7 +9,7 @@ let faceDetector;
 let runningMode = "IMAGE";
 
 // Initialize the face detector
-const initializefaceDetector = async () => {
+const initializeFaceDetector = async () => {
   const vision = await FilesetResolver.forVisionTasks(
     "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
   );
@@ -22,10 +22,9 @@ const initializefaceDetector = async () => {
   });
   demosSection.classList.remove("invisible");
 };
-initializefaceDetector();
+initializeFaceDetector();
 
 // Video Feed
-
 let video = document.getElementById("webcam");
 const liveView = document.getElementById("liveView");
 let enableWebcamButton;
@@ -43,7 +42,7 @@ if (hasGetUserMedia()) {
 
 async function enableCam(event) {
   if (!faceDetector) {
-    alert("Face Detector is still loading. Please try again..");
+    alert("Face Detector is still loading. Please try again.");
     return;
   }
 
@@ -98,7 +97,6 @@ function displayVideoDetections(detections) {
   }
   children.splice(0);
 
-  // Find the face with the highest confidence score
   if (detections.length === 0) return;
 
   const bestDetection = detections.reduce((prev, curr) => {
@@ -160,7 +158,6 @@ function displayVideoDetections(detections) {
     children.push(keypointEl);
   });
 
-  // New Instruction: Distance Calculation between Keypoints 3 and 5, and 3 and 6
   const calculateDistance = (p1, p2) => {
     let x = p2.x - p1.x;
     if (x < 0) {
@@ -173,8 +170,6 @@ function displayVideoDetections(detections) {
   let keypoint5 = keypoints[4];
   let keypoint6 = keypoints[5];
 
-  // console.log(instructionList);
-
   if (keypoint3 && keypoint5 && keypoint6) {
     let distance3to5 = calculateDistance(keypoint5, keypoint3);
     let distance3to6 = calculateDistance(keypoint3, keypoint6);
@@ -182,13 +177,10 @@ function displayVideoDetections(detections) {
     const instructionEl = document.createElement("p");
     instructionEl.className = "instruction";
     if (distance3to5 - distance3to6 >= 0.13) {
-      // instructionEl.innerText = "LEFT";
       ans = "LEFT";
     } else if (distance3to6 - distance3to5 >= 0.13) {
-      // instructionEl.innerText = "RIGHT";
       ans = "RIGHT";
     } else {
-      // instructionEl.innerText = "straight";
       ans = "STRAIGHT";
     }
 
@@ -240,40 +232,44 @@ function displayVideoDetections(detections) {
     children.push(distanceEl3to6);
   }
 }
+
 let currentIndex = 0;
 function processInstruction() {
   if (currentIndex < instructionList.length) {
     let currentInstruction = instructionList[currentIndex];
-    console.log(`${currentIndex}`);
-    // Example logic for updating ans (you should replace this with your actual logic)
     document.getElementById(
       "instruction"
     ).innerText = `Instruction: ${currentInstruction}`;
-    // instructionEl.innerText = `Instruction: ${currentInstruction} | Ans: ${ans}`;
-    console.log(`Instruction: ${currentInstruction}, Ans: ${ans}`); // Output the current instruction and ans
 
     if (ans === currentInstruction) {
-      document.getElementById("result").innerText = `Result: OK`; // Update the DOM with the result
-      currentIndex++; // Move to the next instruction
+      document.getElementById("result").innerText = `Result: OK`;
+
+      // Play the success sound
+      let successSound = document.getElementById("success-sound");
+      successSound.play();
+
+      let tickEl = document.createElement("p");
+      tickEl.innerText = "✔";
+      document.body.appendChild(tickEl);
+      currentIndex++;
     } else {
-      // If it doesn't match, clear the result and try again
       document.getElementById("result").innerText =
-        "Result: Move in the intended direction please! ";
+        "Result: Move in the intended direction please!";
     }
 
-    // Continue processing until all instructions are checked
     if (currentIndex < instructionList.length) {
-      setTimeout(processInstruction, 2000); // Check again after 1 second
+      setTimeout(processInstruction, 2000);
     } else {
-      console.log("All instructions have been processed.");
       document.getElementById(
         "result"
-      ).innerText = `Result:All instructions have been processed.\n\n\n\n\n\n\n\n Redirecting you to our Portal...Please Wait.`;
+      ).innerText = `Result: All instructions have been processed.\n\n Redirecting you to our Portal...Please Wait.`;
       setTimeout(() => {
         window.top.location.href = "https://uidai.gov.in/en/";
-      });
+      }, 2000);
     }
   }
 }
 
-processInstruction();
+setTimeout(processInstruction, 2000);
+
+window.addEventListener("load", initializeFaceDetector);
