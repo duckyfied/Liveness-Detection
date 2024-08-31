@@ -39,21 +39,28 @@ function FaceAuthentication() {
   }, []);
 
   const preprocessImage = (image) => {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    canvas.width = 160;
-    canvas.height = 160;
-    ctx.drawImage(image, 0, 0, 160, 160);
-    const imgData = ctx.getImageData(0, 0, 160, 160);
-
-    const data = new Float32Array(160 * 160 * 3);
-    for (let i = 0; i < 160 * 160; i++) {
-      data[i] = imgData.data[i * 4] / 255.0; // R
-      data[i + 160 * 160] = imgData.data[i * 4 + 1] / 255.0; // G
-      data[i + 160 * 160 * 2] = imgData.data[i * 4 + 2] / 255.0; // B
+    const cropCanvas = document.createElement("canvas");
+    const cropCtx = cropCanvas.getContext("2d");
+    const resizeCanvas = document.createElement("canvas");
+    const resizeCtx = resizeCanvas.getContext("2d");
+    const outputSize = 160;
+    resizeCanvas.width = outputSize;
+    resizeCanvas.height = outputSize;
+    const cropSize = Math.min(image.width, image.height);
+    const cropX = (image.width - cropSize) / 2;
+    const cropY = 0;
+    cropCanvas.width = cropSize;
+    cropCanvas.height = cropSize;
+    cropCtx.drawImage(image, cropX, cropY, cropSize, cropSize, 0, 0, cropSize, cropSize);
+    resizeCtx.drawImage(cropCanvas, 0, 0, cropSize, cropSize, 0, 0, outputSize, outputSize);
+    const imgData = resizeCtx.getImageData(0, 0, outputSize, outputSize);
+    const data = new Float32Array(outputSize * outputSize * 3);
+    for (let i = 0; i < outputSize * outputSize; i++) {
+      data[i] = imgData.data[i * 4] / 255.0; // R channel
+      data[i + outputSize * outputSize] = imgData.data[i * 4 + 1] / 255.0; // G channel
+      data[i + outputSize * outputSize * 2] = imgData.data[i * 4 + 2] / 255.0; // B channel
     }
-
-    return new ort.Tensor("float32", data, [1, 3, 160, 160]);
+    return new ort.Tensor("float32", data, [1, 3, outputSize, outputSize]);
   };
 
   const compareEmbeddings = (embedding1, embedding2) => {

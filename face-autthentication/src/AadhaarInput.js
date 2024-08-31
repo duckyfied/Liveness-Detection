@@ -32,6 +32,7 @@ function AadhaarInput() {
           value={aadhar}
           onChange={(e) => setAadharNumber(e.target.value)}
           placeholder="Enter Aadhaar Number"
+          autoFocus
         />
         <button type="submit">Submit</button>
       </form>
