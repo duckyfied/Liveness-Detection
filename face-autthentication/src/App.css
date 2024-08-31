@@ -77,3 +77,18 @@
 .Capture-button:hover {
   background-color: #0000cc;
 }
+
+.Option-button {
+  display: inline-block;
+  margin: 20px;
+  padding: 15px 30px;
+  font-size: 18px;
+  background-color: #0000ff;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.Option-button:hover {
+  background-color: #0000cc;
+}

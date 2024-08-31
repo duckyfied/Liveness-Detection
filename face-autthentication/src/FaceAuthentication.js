@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as ort from "onnxruntime-web";
 import Webcam from "react-webcam";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 
 const MODEL_URL = "/model/facenet_simplified.onnx";
@@ -13,14 +13,15 @@ function FaceAuthentication() {
   const [aadharNumber, setAadharNumber] = useState(null);
   const [encoding, setEncoding] = useState(null);
   const [authenticationMessage, setAuthenticationMessage] = useState("");
+  const [countdown, setCountdown] = useState(5);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const { state } = location;
     if (state && state.userData) {
       setAuthenticatedName(state.userData.name);
       setAadharNumber(state.userData.aadhar);
-      // Convert the stored encoding string to a Float32Array
       const storedEncoding = JSON.parse(state.userData.encoding);
       setEncoding(new Float32Array(storedEncoding));
     }
@@ -93,17 +94,33 @@ function FaceAuthentication() {
           if (encoding) {
             const similarity = compareEmbeddings(newEmbedding, encoding);
 
-            // Log embeddings and similarity for debugging
             console.log("New Embedding:", newEmbedding);
             console.log("Stored Encoding:", encoding);
             console.log("Similarity:", similarity);
-
             if (similarity > 0.1) {
               setAuthenticationMessage(
                 `Authentication Successful for: ${authenticatedName}`
               );
+              const countdownInterval = setInterval(() => {
+                setCountdown((prev) => {
+                  if (prev === 1) {
+                    clearInterval(countdownInterval);
+                    navigate("/options");
+                  }
+                  return prev - 1;
+                });
+              }, 1000);
             } else {
               setAuthenticationMessage("Authentication Failed");
+              const countdownInterval = setInterval(() => {
+                setCountdown((prev) => {
+                  if (prev === 1) {
+                    clearInterval(countdownInterval);
+                    window.location.reload();
+                  }
+                  return prev - 1;
+                });
+              }, 1000);
             }
           } else {
             setAuthenticationMessage("No encoding found for comparison");
@@ -142,6 +159,16 @@ function FaceAuthentication() {
         {authenticationMessage && (
           <div>
             <h2>{authenticationMessage}</h2>
+            {(authenticationMessage.includes("Successful") ||
+              authenticationMessage.includes("Failed")) && (
+              <div>
+                <p>
+                  {authenticationMessage.includes("Successful")
+                    ? `Redirecting in ${countdown}...`
+                    : `Reloading in ${countdown}...`}
+                </p>
+              </div>
+            )}
           </div>
         )}
       </div>
