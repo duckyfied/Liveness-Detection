@@ -76,8 +76,7 @@ function GazeMouse() {
           }}
           onClick={() => handleClick(index)}
         ></div>
-      ))}
-      
+      ))}      
       {live && (
         <div
           className="live-status"
