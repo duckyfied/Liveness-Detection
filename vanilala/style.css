@@ -1,0 +1,67 @@
+
+body {
+    font-family: roboto;
+    margin: 2em;
+    color: #3d3d3d;
+    --mdc-theme-primary: #007f8b;
+    --mdc-theme-on-primary: #f1f3f4;
+  }
+  
+  h1 {
+    color: #007f8b;
+  }
+  
+  h2 {
+    clear: both;
+  }
+  
+  video {
+    display: block;
+    transform: rotateY(180deg);
+  }
+  
+  section {
+    opacity: 1;
+    transition: opacity 500ms ease-in-out;
+  }
+  
+  .mdc-button.mdc-button--raised.removed {
+    display: none;
+  }
+  
+  .invisible {
+    opacity: 0.2;
+  }
+  
+  .videoView,
+  .detectOnClick {
+    position: relative;
+    float: left;
+    width: 48%;
+    margin: 2% 1%;
+    cursor: pointer;
+  }
+  
+  .detectOnClick p,
+  .videoView p {
+    position: absolute;
+    background-color: #007f8b;
+    color: #fff;
+    font-size: 12px;
+  }
+  
+  .highlighter {
+    background: rgba(0, 255, 0, 0.25);
+    border: 1px dashed #fff;
+    position: absolute;
+  }
+  
+  .key-point {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background-color: #ff0000;
+    border-radius: 50%;
+    display: block;
+  }
+  

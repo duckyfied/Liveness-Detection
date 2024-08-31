@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="style.css" rel="stylesheet">
+  <script src="script.js"></script>
+  <title>Face Detection Demo</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js"
+      crossorigin="anonymous"></script> -->
+</head>
+<body>
+  <section id="demos" >
+    <div id="liveView" class="videoView">
+      <button id="webcamButton" class="mdc-button mdc-button--raised">
+        <span class="mdc-button__ripple"></span>
+        <span class="mdc-button__label">ENABLE WEBCAM</span>
+      </button>
+      <video id="webcam" autoplay playsinline></video>
+    </div>
+  </section>
+  <p id="instruction">Instruction: </p>
+  <p id="result">Result: </p>
+
+  <script src="script.js" type="module"></script>
+</body>
+</html>
