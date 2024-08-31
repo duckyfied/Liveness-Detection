@@ -1,17 +1,17 @@
-//import React, { useEffect, useState } from "react";
-
 import React from "react";
 
 function GazeMouse() {
   return (
     <div>
-      <h1>Gaze mouse Test</h1>
-      <p>Hello</p>
+      <h1>GazeMouse</h1>
+      <p>This feature is under development!</p>
     </div>
   );
 }
 
 export default GazeMouse;
+
+// import React, { useEffect, useState } from "react";
 
 // function GazeMouse() {
 //   const [gazePosition, setGazePosition] = useState({ x: 0, y: 0 });
@@ -22,12 +22,13 @@ export default GazeMouse;
 //     { x: 1100, y: 750, checked: false, clicked: false },
 //   ]);
 //   const [live, setLive] = useState(false);
+
 //   useEffect(() => {
 //     const webgazer = window.webgazer;
 
 //     if (webgazer) {
 //       webgazer
-//         .setRegression('ridge')
+//         .setRegression("ridge")
 //         .setGazeListener((data, clock) => {
 //           if (data) {
 //             setGazePosition({ x: data.x, y: data.y });
@@ -36,11 +37,12 @@ export default GazeMouse;
 //         .begin();
 
 //       webgazer.applyKalmanFilter(false);
-//       webgazer.setTracker('clmtrackr');
+//       webgazer.setTracker("clmtrackr");
 //       webgazer.showFaceOverlay(false);
 //       webgazer.showFaceFeedbackBox(false);
-//       //webgazer.showPredictionPoints(false);
+//       // webgazer.showPredictionPoints(false);
 //     }
+
 //     return () => {
 //       if (webgazer) {
 //         webgazer.clearGazeListener();
@@ -52,7 +54,8 @@ export default GazeMouse;
 //   const handleClick = (index) => {
 //     const point = points[index];
 //     const distance = Math.sqrt(
-//       Math.pow(point.x - gazePosition.x, 2) + Math.pow(point.y - gazePosition.y, 2)
+//       Math.pow(point.x - gazePosition.x, 2) +
+//         Math.pow(point.y - gazePosition.y, 2)
 //     );
 
 //     if (distance < 120) {
@@ -63,6 +66,17 @@ export default GazeMouse;
 //       const checkedPoints = newPoints.filter((p) => p.clicked).length;
 //       if (checkedPoints >= 2) {
 //         setLive(true);
+
+//         const webgazer = window.webgazer;
+//         if (webgazer) {
+//           webgazer.clearGazeListener();
+//           webgazer.pause();
+//         }
+
+//         const videoElement = document.getElementById("webgazerVideoContainer");
+//         if (videoElement) {
+//           videoElement.remove();
+//         }
 //       }
 //     }
 //   };
@@ -73,18 +87,18 @@ export default GazeMouse;
 //       {points.map((point, index) => (
 //         <div
 //           key={index}
-//           className={`point ${point.clicked ? 'checked' : ''}`}
+//           className={`point ${point.clicked ? "checked" : ""}`}
 //           style={{
 //             left: `${point.x}px`,
 //             top: `${point.y}px`,
-//             backgroundColor: point.clicked ? 'green' : 'orange',
-//             position: 'absolute',
-//             width: '20px',
-//             height: '20px',
-//             borderRadius: '50%',
-//             transform: 'translate(-50%, -50%)',
+//             backgroundColor: point.clicked ? "green" : "orange",
+//             position: "absolute",
+//             width: "20px",
+//             height: "20px",
+//             borderRadius: "50%",
+//             transform: "translate(-50%, -50%)",
 //             zIndex: 2,
-//             cursor: 'pointer',
+//             cursor: "pointer",
 //           }}
 //           onClick={() => handleClick(index)}
 //         ></div>
@@ -93,15 +107,15 @@ export default GazeMouse;
 //         <div
 //           className="live-status"
 //           style={{
-//             position: 'absolute',
-//             bottom: '20px',
-//             left: '50%',
-//             transform: 'translateX(-50%)',
-//             backgroundColor: 'rgba(0, 255, 0, 0.8)',
-//             padding: '10px 20px',
-//             borderRadius: '10px',
-//             color: '#fff',
-//             fontSize: '18px',
+//             position: "absolute",
+//             bottom: "20px",
+//             left: "50%",
+//             transform: "translateX(-50%)",
+//             backgroundColor: "rgba(0, 255, 0, 0.8)",
+//             padding: "10px 20px",
+//             borderRadius: "10px",
+//             color: "#fff",
+//             fontSize: "18px",
 //             zIndex: 3,
 //           }}
 //         >

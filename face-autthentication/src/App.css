@@ -92,3 +92,7 @@
 .Option-button:hover {
   background-color: #0000cc;
 }
+
+iframe {
+  border: 0;
+}
