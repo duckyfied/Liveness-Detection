@@ -97,7 +97,7 @@ function FaceAuthentication() {
             console.log("New Embedding:", newEmbedding);
             console.log("Stored Encoding:", encoding);
             console.log("Similarity:", similarity);
-            if (similarity > 0.1) {
+            if (similarity > 0.5) {
               setAuthenticationMessage(
                 `Authentication Successful for: ${authenticatedName}`
               );
