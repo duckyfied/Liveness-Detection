@@ -12,11 +12,15 @@ function AadhaarInput() {
     try {
       // Fetch user data from API
       const response = await axios.post("/api/v1/user", { aadhar });
-      if (response.data) {
+      if (response.data && response.data.data) {
         // Navigate to FaceAuthentication with state
         navigate("/face-authentication", {
           state: { userData: response.data.data },
         });
+      } else {
+        window.alert(
+          "The entered Aadhar number is invalid. Kindly re-enter your Aadhar number"
+        );
       }
     } catch (err) {
       setError("Failed to fetch user data");
@@ -32,6 +36,7 @@ function AadhaarInput() {
           value={aadhar}
           onChange={(e) => setAadharNumber(e.target.value)}
           placeholder="Enter Aadhaar Number"
+          autoFocus
         />
         <button type="submit">Submit</button>
       </form>
