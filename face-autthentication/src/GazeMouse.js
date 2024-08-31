@@ -28,7 +28,6 @@ function GazeMouse() {
       webgazer.showFaceFeedbackBox(false);
       //webgazer.showPredictionPoints(false);
     }
-
     return () => {
       if (webgazer) {
         webgazer.clearGazeListener();
