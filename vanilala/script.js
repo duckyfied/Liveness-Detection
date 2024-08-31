@@ -81,6 +81,17 @@ async function predictWebcam() {
   window.requestAnimationFrame(predictWebcam);
 }
 
+var options = ["LEFT","RIGHT"]
+var  ans = null;
+
+var instructionList = [];
+for(let i =0;i<5;i++){
+  let randomNumber = Math.floor(Math.random() * 2);
+  let randomOption = options[randomNumber];
+  instructionList.push(randomOption);
+} 
+
+
 function displayVideoDetections(detections) {
   for (let child of children) {
     liveView.removeChild(child);
@@ -156,6 +167,11 @@ function displayVideoDetections(detections) {
   let keypoint5 = keypoints[4];
   let keypoint6 = keypoints[5];
 
+
+// console.log(instructionList);
+
+
+  
   if (keypoint3 && keypoint5 && keypoint6) {
     let distance3to5 = calculateDistance(keypoint5, keypoint3);
     let distance3to6 = calculateDistance(keypoint3, keypoint6);
@@ -163,12 +179,23 @@ function displayVideoDetections(detections) {
     const instructionEl = document.createElement("p");
     instructionEl.className = "instruction";
     if (distance3to5 - distance3to6 >= 0.13) {
-      instructionEl.innerText = "LEFT";
+      // instructionEl.innerText = "LEFT";
+      ans = "LEFT";
     } else if (distance3to6 - distance3to5 >= 0.13) {
-      instructionEl.innerText = "RIGHT";
+      // instructionEl.innerText = "RIGHT";
+      ans = "RIGHT";
     } else {
-      instructionEl.innerText = "STRAIGHT";
+      // instructionEl.innerText = "straight";
+      ans = "STRAIGHT";
     }
+
+
+    
+
+  
+
+
+    instructionEl.innerText = ans;
     instructionEl.style.position = "absolute";
     instructionEl.style.left = `${video.offsetWidth - bestDetection.boundingBox.width - bestDetection.boundingBox.originX}px`;
     instructionEl.style.top = `${bestDetection.boundingBox.originY + bestDetection.boundingBox.height + 50}px`;
@@ -194,3 +221,32 @@ function displayVideoDetections(detections) {
     children.push(distanceEl3to6);
   }
 }
+let currentIndex = 0;
+function processInstruction() {
+  if (currentIndex < instructionList.length) {
+    let currentInstruction = instructionList[currentIndex];
+      console.log(`${currentIndex}`)
+    // Example logic for updating ans (you should replace this with your actual logic)
+    document.getElementById("instruction").innerText = `Instruction: ${currentInstruction}`;
+    // instructionEl.innerText = `Instruction: ${currentInstruction} | Ans: ${ans}`;
+    console.log(`Instruction: ${currentInstruction}, Ans: ${ans}`); // Output the current instruction and ans
+
+    if (ans === currentInstruction) {
+      document.getElementById("result").innerText = `Result: OK`; // Update the DOM with the result
+      currentIndex++; // Move to the next instruction
+    } else {
+      // If it doesn't match, clear the result and try again
+      document.getElementById("result").innerText = "Result: Incorrect direction ";
+    }
+
+    // Continue processing until all instructions are checked
+if (currentIndex < instructionList.length) {
+  setTimeout(processInstruction, 2000); // Check again after 1 second
+} else {
+  console.log("All instructions have been processed.");
+  document.getElementById("result").innerText = `Result:All instructions have been processed.`;
+}
+  }
+}
+
+processInstruction()
