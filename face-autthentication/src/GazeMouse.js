@@ -9,6 +9,7 @@ function GazeMouse() {
     { x: 1100, y: 750, checked: false, clicked: false },
   ]);
   const [live, setLive] = useState(false);
+
   useEffect(() => {
     const webgazer = window.webgazer;
 
@@ -26,7 +27,7 @@ function GazeMouse() {
       webgazer.setTracker('clmtrackr');
       webgazer.showFaceOverlay(false);
       webgazer.showFaceFeedbackBox(false);
-      //webgazer.showPredictionPoints(false);
+      // webgazer.showPredictionPoints(false);
     }
     return () => {
       if (webgazer) {
@@ -50,6 +51,19 @@ function GazeMouse() {
       const checkedPoints = newPoints.filter((p) => p.clicked).length;
       if (checkedPoints >= 2) {
         setLive(true);
+
+        const webgazer = window.webgazer;
+        if (webgazer) {
+          webgazer.clearGazeListener();
+          webgazer.pause();
+          webgazer.end(); 
+        }
+
+        const videoElement = document.getElementById('webgazerVideoContainer');
+        if (videoElement) {
+          videoElement.remove();
+        }
+        
       }
     }
   };
