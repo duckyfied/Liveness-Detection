@@ -83,9 +83,9 @@ async function predictWebcam() {
 
 var options = ["LEFT","RIGHT"]
 var  ans = null;
-
+var n =  Math.floor(Math.random() * 2) + 2;
 var instructionList = [];
-for(let i =0;i<5;i++){
+for(let i =0;i<n;i++){
   let randomNumber = Math.floor(Math.random() * 2);
   let randomOption = options[randomNumber];
   instructionList.push(randomOption);
