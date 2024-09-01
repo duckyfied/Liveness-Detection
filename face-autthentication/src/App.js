@@ -6,6 +6,7 @@ import OptionsPage from "./OptionsPage";
 import GazeMouse from "./GazeMouse";
 import LeftRight from "./LeftRight";
 import BackgroundMonitor from "./BackgroundMonitor";
+import PhotoOnPhoto from "./PhotoOnPhoto";
 
 function App() {
   const [encoding, setEncoding] = useState(null);
@@ -42,9 +43,22 @@ function App() {
     return shouldRenderMonitor ? <BackgroundMonitor encoding={encoding} onFail={handleMonitoringFailure} /> : null;
   };
 
+  const ConditionalPhotoOnPhoto = () => {
+    const location = useLocation();
+    const shouldRenderMonitor = [
+      "/face-authentication",
+      "/options",
+      "/gaze-mouse",
+      "/left-right"
+    ].includes(location.pathname);
+
+    return shouldRenderMonitor ? <PhotoOnPhoto/> : null;
+  };
+
   return (
-    <Router>
+    <Router>      
       <ConditionalBackgroundMonitor />
+      <ConditionalPhotoOnPhoto />
       <Routes>
         <Route
           path="/"
