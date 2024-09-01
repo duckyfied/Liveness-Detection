@@ -23,10 +23,15 @@ function AadhaarInput() {
     e.preventDefault();
     try {
       const response = await axios.post("/api/v1/user", { aadhar });
-      if (response.data) {
+      if (response.data && response.data.data) {
+        // Navigate to FaceAuthentication with state
         navigate("/face-authentication", {
           state: { userData: response.data.data },
         });
+      } else {
+        window.alert(
+          "The entered Aadhar number is invalid. Kindly re-enter your Aadhar number"
+        );
       }
     } catch (err) {
       setError(translations.errorMessage[language]);
