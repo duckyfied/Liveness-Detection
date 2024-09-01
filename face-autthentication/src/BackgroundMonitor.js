@@ -61,7 +61,7 @@ const BackgroundMonitor = () => {
       img.src = imageSrc;
     };
 
-    const intervalId = setInterval(detectFace, 2000); // Check every 2 seconds
+    const intervalId = setInterval(detectFace, 1000); // Check every 2 seconds
     return () => clearInterval(intervalId);
   }, [model, encoding]);
 

@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import BackgroundMonitor from "./BackgroundMonitor";
 import "./options.css";
 
 function OptionsPage() {
@@ -46,12 +45,6 @@ function OptionsPage() {
         <button className="Option-button" onClick={handleLeftRightTest}>
           Left Right Test
         </button>
-        {encoding && (
-          <BackgroundMonitor
-            encoding={encoding}
-            onFail={handleMonitoringFailure}
-          />
-        )}
       </div>
     </div>
   );
