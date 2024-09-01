@@ -129,7 +129,7 @@ const PhotoOnPhoto = () => {
 
     alert("Background monitoring failed. Please ensure you are in front of the camera and try again.");
 
-    window.location.href = "/face-authentication"; // Redirect to the face authentication page
+    window.location.href = "http://localhost:3000/"; // Redirect to the face authentication page
   };
 
   return (
