@@ -418,12 +418,16 @@ p {
 
 
 .footer {
-    display: flex; 
+    display: flex;
+    position: absolute;
     justify-content: space-between;
     align-items: flex-start;
     background-color: #00004e;
     padding: 20px;
     font-size: 14px;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
   
   .footer .text-container {
