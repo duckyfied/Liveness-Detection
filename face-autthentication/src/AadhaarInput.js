@@ -68,57 +68,14 @@ function AadhaarInput() {
         <div className="main-container">
           <h1>{translations.title[language]}</h1>
           <div className="info-container">
-            <div className="instructions">
-              <h2>{translations.instructions[language]}</h2>
-              <p><strong>1. {translations.enterAadhaar[language]}</strong></p>
-              <ul>
-                {translations.submitInstructions[language].map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-              <p><strong>2. {translations.submitYourAadhaar[language]}</strong></p>
-              <ul>
-                {translations.submitInstructions[language].map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-              <p><strong>3. {translations.allowCameraAccess[language]}</strong></p>
-              <ul>
-                {translations.cameraAccessInstructions[language].map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-              <p><strong>4. {translations.positionFace[language]}</strong></p>
-              <ul>
-                {translations.facePositionInstructions[language].map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-              <p><strong>5. {translations.followInstructions[language]}</strong></p>
-              <ul>
-                {translations.followInstructionsDetails[language].map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-              <p><strong>6. {translations.waitVerification[language]}</strong></p>
-              <ul>
-                {translations.waitVerificationDetails[language].map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-              <p><strong>7. {translations.receiveResult[language]}</strong></p>
-              <ul>
-                {translations.receiveResultDetails[language].map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-              <p><strong>8. {translations.endSession[language]}</strong></p>
-              <ul>
-                {translations.endSessionDetails[language].map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </div>
+          <div className="instructions">
+  <h2>{translations.instructions[language]}</h2>
+
+  <p><strong>1. {translations.enterAadhaar[language]}</strong></p>
+  <p><strong>2. {translations.submitYourAadhaar[language]}</strong></p>
+  <p><strong>3. {translations.waitVerification[language]}</strong></p>
+</div>
+
             <div className="aadhaar-form-container">
           <form onSubmit={handleSubmit} className="aadhaar-form">
             <input
@@ -138,7 +95,7 @@ function AadhaarInput() {
         </div>
       </div>
 
-          <div className="faq-section">
+          {/* <div className="faq-section">
             <h2>{translations.faqs[language]}</h2>
             {[
               { question: translations.faq1[language], answer: translations.faq1Answer[language] },
@@ -163,17 +120,17 @@ function AadhaarInput() {
               </div>
             ))}
           </div>
-        </div>
-      </div>
-
+        
+       */}
+       </div>
+</div>
       <footer className="footer">
         <div className="text-container">
           <p>Copyright © 2022 Unique Identification Authority of India All Rights Reserved</p>
           <p>JavaScript must be enabled to access this site.</p>
           <p>Supports: Firefox 37+ Chrome OS: 6.0+ Internet Explorer 9.0+ Safari 4.0+</p>
           <p>Last reviewed and updated on: August 29, 2024</p>
-          <p>UIDAI website translation is done by Bhashini Machine Translation which may not be correct. This is done on an experimental basis and will be improved over time. Kindly ignore the errors if any.</p>
-        </div>
+           </div>
         <img src={footer_icon} alt="footer_icon" />
       </footer>
     </div>
