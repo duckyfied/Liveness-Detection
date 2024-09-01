@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import * as ort from "onnxruntime-web";
 import Webcam from "react-webcam";
 import { useLocation, useNavigate } from "react-router-dom";
-// import "./faceauth.css";
-import "./App.css";
+import "./faceauth.css";
 import BackgroundMonitor from "./BackgroundMonitor";
 
 const MODEL_URL = "/model/facenet_simplified.onnx";
@@ -20,19 +19,20 @@ function FaceAuthentication() {
   const navigate = useNavigate();
   const handleMonitoringFailure = () => {
     console.log("Background monitoring failed.");
-    
+
     // Notify the user
-    alert("Background monitoring failed. Please make sure you are in front of the camera and try again.");
-    
+    alert(
+      "Background monitoring failed. Please make sure you are in front of the camera and try again."
+    );
+
     // Optionally redirect to a different page or retry the authentication
     window.location.href = "/face-authentication"; // Redirect to the face authentication page
     // OR
     // setAuthenticationMessage("Background monitoring failed. Please try again."); // Show a message in the UI
-  
+
     // Optionally log the failure (e.g., to an analytics service or server)
     // axios.post('/api/log', { error: "Background monitoring failed" });
   };
-
 
   useEffect(() => {
     const { state } = location;
@@ -130,7 +130,7 @@ function FaceAuthentication() {
 
           if (encoding) {
             const similarity = compareEmbeddings(newEmbedding, encoding);
-            
+
             console.log("New Embedding:", newEmbedding);
             console.log("Stored Encoding:", encoding);
             console.log("Similarity:", similarity);
@@ -204,7 +204,10 @@ function FaceAuthentication() {
         </div>
       </div>
       {encoding && (
-        <BackgroundMonitor encoding={encoding} onFail={handleMonitoringFailure} />
+        <BackgroundMonitor
+          encoding={encoding}
+          onFail={handleMonitoringFailure}
+        />
       )}
     </div>
   );
