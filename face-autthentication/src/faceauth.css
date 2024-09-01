@@ -1,0 +1,98 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+.FaceAuthentication-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  max-width: 1200px;
+  margin: auto;
+  margin-top: 5%;
+  height: auto;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.Webcam-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  margin-right: 100px;
+  transform: scaleX(-1);
+  transform-origin: center;
+  background: linear-gradient(to right, black 4px, transparent 4px) 0 0,
+    linear-gradient(to right, black 4px, transparent 4px) 0 100%,
+    linear-gradient(to left, black 4px, transparent 4px) 100% 0,
+    linear-gradient(to left, black 4px, transparent 4px) 100% 100%,
+    linear-gradient(to bottom, black 4px, transparent 4px) 0 0,
+    linear-gradient(to bottom, black 4px, transparent 4px) 100% 0,
+    linear-gradient(to top, black 4px, transparent 4px) 0 100%,
+    linear-gradient(to top, black 4px, transparent 4px) 100% 100%;
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+}
+
+.Webcam-feed {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  width: 60%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 50%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+}
+
+.Auth-details-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  border-radius: 3%;
+}
+
+.b1 {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.b1:hover {
+  background-color: #0056b3;
+}
+
+h2 {
+  margin: 20px 0;
+  font-family: Montserrat;
+}
+
+p {
+  margin: 10px 0;
+  font-family: Montserrat;
+}
+
+@media (max-width: 768px) {
+  .FaceAuthentication-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .Webcam-container {
+    margin-right: 0;
+    margin-bottom: 20px;
+    justify-content: center;
+  }
+
+  .Auth-details-container {
+    text-align: center;
+  }
+}

@@ -1,15 +1,4 @@
-.App {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #282c34;
-  color: white;
-}
-
-.Webcam-container {
+/* .Webcam-container {
   position: relative;
   width: 80vw;
   max-width: 640px;
@@ -56,7 +45,6 @@
   position: absolute;
   width: 30%;
   height: 80%;
-  /*border: 3px solid green; /* Oval border with semi-transparent color */
   border-radius: 50%;
   background-color: transparent;
   z-index: 1;
@@ -92,6 +80,7 @@
 .Option-button:hover {
   background-color: #0000cc;
 }
+  */
 
 iframe {
   border: 0;
