@@ -1,9 +1,13 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import BackgroundMonitor from "./BackgroundMonitor";
 import "./App.css";
 
 function OptionsPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { userData } = location.state || {};
+  const encoding = userData ? new Float32Array(JSON.parse(userData.encoding)) : null;
 
   const handleGazeTest = () => {
     navigate("/gaze-mouse");
@@ -12,6 +16,22 @@ function OptionsPage() {
   const handleLeftRightTest = () => {
     navigate("/left-right");
   };
+
+  const handleMonitoringFailure = () => {
+    console.log("Background monitoring failed.");
+    
+    // Notify the user
+    alert("Background monitoring failed. Please make sure you are in front of the camera and try again.");
+    
+    // Optionally redirect to a different page or retry the authentication
+    window.location.href = "/face-authentication"; // Redirect to the face authentication page
+    // OR
+    // setAuthenticationMessage("Background monitoring failed. Please try again."); // Show a message in the UI
+  
+    // Optionally log the failure (e.g., to an analytics service or server)
+    // axios.post('/api/log', { error: "Background monitoring failed" });
+  };
+  
 
   return (
     <div className="App">
@@ -22,6 +42,9 @@ function OptionsPage() {
       <button className="Option-button" onClick={handleLeftRightTest}>
         Left Right Test
       </button>
+      {encoding && (
+        <BackgroundMonitor encoding={encoding} onFail={handleMonitoringFailure} />
+      )}
     </div>
   );
 }

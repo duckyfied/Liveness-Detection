@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import * as ort from "onnxruntime-web";
 import Webcam from "react-webcam";
 import { useLocation, useNavigate } from "react-router-dom";
+// import "./faceauth.css";
 import "./App.css";
+import BackgroundMonitor from "./BackgroundMonitor";
 
 const MODEL_URL = "/model/facenet_simplified.onnx";
 
@@ -16,6 +18,21 @@ function FaceAuthentication() {
   const [countdown, setCountdown] = useState(5);
   const location = useLocation();
   const navigate = useNavigate();
+  const handleMonitoringFailure = () => {
+    console.log("Background monitoring failed.");
+    
+    // Notify the user
+    alert("Background monitoring failed. Please make sure you are in front of the camera and try again.");
+    
+    // Optionally redirect to a different page or retry the authentication
+    window.location.href = "/face-authentication"; // Redirect to the face authentication page
+    // OR
+    // setAuthenticationMessage("Background monitoring failed. Please try again."); // Show a message in the UI
+  
+    // Optionally log the failure (e.g., to an analytics service or server)
+    // axios.post('/api/log', { error: "Background monitoring failed" });
+  };
+
 
   useEffect(() => {
     const { state } = location;
@@ -52,8 +69,28 @@ function FaceAuthentication() {
     const cropY = 0;
     cropCanvas.width = cropSize;
     cropCanvas.height = cropSize;
-    cropCtx.drawImage(image, cropX, cropY, cropSize, cropSize, 0, 0, cropSize, cropSize);
-    resizeCtx.drawImage(cropCanvas, 0, 0, cropSize, cropSize, 0, 0, outputSize, outputSize);
+    cropCtx.drawImage(
+      image,
+      cropX,
+      cropY,
+      cropSize,
+      cropSize,
+      0,
+      0,
+      cropSize,
+      cropSize
+    );
+    resizeCtx.drawImage(
+      cropCanvas,
+      0,
+      0,
+      cropSize,
+      cropSize,
+      0,
+      0,
+      outputSize,
+      outputSize
+    );
     const imgData = resizeCtx.getImageData(0, 0, outputSize, outputSize);
     const data = new Float32Array(outputSize * outputSize * 3);
     for (let i = 0; i < outputSize * outputSize; i++) {
@@ -93,7 +130,7 @@ function FaceAuthentication() {
 
           if (encoding) {
             const similarity = compareEmbeddings(newEmbedding, encoding);
-
+            
             console.log("New Embedding:", newEmbedding);
             console.log("Stored Encoding:", encoding);
             console.log("Similarity:", similarity);
@@ -101,6 +138,8 @@ function FaceAuthentication() {
               setAuthenticationMessage(
                 `Authentication Successful for: ${authenticatedName}`
               );
+              setAuthenticatedName(null); // Hide details after capture
+              setAadharNumber(null);
               const countdownInterval = setInterval(() => {
                 setCountdown((prev) => {
                   if (prev === 1) {
@@ -112,6 +151,8 @@ function FaceAuthentication() {
               }, 1000);
             } else {
               setAuthenticationMessage("Authentication Failed");
+              setAuthenticatedName(null); // Hide details after capture
+              setAadharNumber(null);
               const countdownInterval = setInterval(() => {
                 setCountdown((prev) => {
                   if (prev === 1) {
@@ -134,44 +175,37 @@ function FaceAuthentication() {
 
   return (
     <div className="App">
-      <h1>Face Authentication</h1>
-      <div className="Webcam-container">
-        <Webcam
-          audio={false}
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-          className="Webcam"
-        />
-        <div className="Face-overlay-container">
-          <div className="Face-overlay"></div>
+      {/* <h1>Face Authentication</h1> */}
+      <div className="FaceAuthentication-container">
+        <div className="Webcam-container">
+          <Webcam
+            audio={false}
+            ref={webcamRef}
+            screenshotFormat="image/jpeg"
+            className="Webcam-feed"
+          />
+        </div>
+        <div className="Auth-details-container">
+          {authenticatedName && aadharNumber && (
+            <>
+              <h2>Welcome, {authenticatedName}</h2>
+              <p>Aadhaar Number: {aadharNumber}</p>
+              <button className="b1" onClick={handleCaptureAndCheck}>
+                Capture & Check
+              </button>
+            </>
+          )}
+          {authenticationMessage && (
+            <div>
+              <h2>{authenticationMessage}</h2>
+              <p>Redirecting in {countdown} seconds...</p>
+            </div>
+          )}
         </div>
       </div>
-      <div>
-        <h3>
-          {authenticatedName
-            ? `Welcome, ${authenticatedName}`
-            : "Please capture your image"}
-        </h3>
-        {aadharNumber && <p>Aadhar Number: {aadharNumber}</p>}
-        <button className="Capture-button" onClick={handleCaptureAndCheck}>
-          Capture Image and Check
-        </button>
-        {authenticationMessage && (
-          <div>
-            <h2>{authenticationMessage}</h2>
-            {(authenticationMessage.includes("Successful") ||
-              authenticationMessage.includes("Failed")) && (
-              <div>
-                <p>
-                  {authenticationMessage.includes("Successful")
-                    ? `Redirecting in ${countdown}...`
-                    : `Reloading in ${countdown}...`}
-                </p>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+      {encoding && (
+        <BackgroundMonitor encoding={encoding} onFail={handleMonitoringFailure} />
+      )}
     </div>
   );
 }

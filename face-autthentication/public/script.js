@@ -89,6 +89,7 @@ for (let i = 0; i < n; i++) {
   let randomNumber = Math.floor(Math.random() * 2);
   let randomOption = options[randomNumber];
   instructionList.push(randomOption);
+  instructionList.push("STRAIGHT");
 }
 
 function displayVideoDetections(detections) {
@@ -235,24 +236,31 @@ function displayVideoDetections(detections) {
 
 let currentIndex = 0;
 function processInstruction() {
+  console.log(instructionList)
   if (currentIndex < instructionList.length) {
     let currentInstruction = instructionList[currentIndex];
     document.getElementById(
       "instruction"
     ).innerText = `Instruction: ${currentInstruction}`;
+    // ? `Instruction: ${currentInstruction}`
+    // : `Instruction: Look straight`;
 
     if (ans === currentInstruction) {
       document.getElementById("result").innerText = `Result: OK`;
 
       // Play the success sound
-      let successSound = document.getElementById("success-sound");
-      successSound.play();
+      if(ans != "STRAIGHT"){
+        let successSound = document.getElementById("success-sound");
+        successSound.play();
 
-      let tickEl = document.createElement("p");
-      tickEl.innerText = "✔";
-      document.body.appendChild(tickEl);
+        let tickEl = document.createElement("p");
+        tickEl.innerText = "✔";
+        document.body.appendChild(tickEl);
+      }
+
       currentIndex++;
     } else {
+      
       document.getElementById("result").innerText =
         "Result: Move in the intended direction please!";
     }
@@ -270,6 +278,6 @@ function processInstruction() {
   }
 }
 
-setTimeout(processInstruction, 2000);
+processInstruction();
 
 window.addEventListener("load", initializeFaceDetector);
