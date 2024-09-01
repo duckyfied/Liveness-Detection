@@ -6,13 +6,13 @@ import logo1 from './logo1.png';
 import logo2 from './logo2.svg';
 import footer_icon from './footer_icon.png';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { translations } from './translations'; 
+import { translations } from './translations';
 
 function AadhaarInput() {
   const [aadhar, setAadharNumber] = useState("");
   const [error, setError] = useState("");
   const [activeIndex, setActiveIndex] = useState(null);
-  const [language, setLanguage] = useState("en"); 
+  const [language, setLanguage] = useState("en");
   const navigate = useNavigate();
 
   const handleLanguageChange = (lang) => {
@@ -43,7 +43,7 @@ function AadhaarInput() {
   };
 
   return (
-    <div>   
+    <div>
       <div className="header">
         <div className="logo-container">
           <img src={logo1} alt="logo1" />
@@ -73,32 +73,32 @@ function AadhaarInput() {
         <div className="main-container">
           <h1>{translations.title[language]}</h1>
           <div className="info-container">
-          <div className="instructions">
-  <h2>{translations.instructions[language]}</h2>
+            <div className="instructions">
+              <h2>{translations.instructions[language]}</h2>
 
-  <p><strong>1. {translations.enterAadhaar[language]}</strong></p>
-  <p><strong>2. {translations.submitYourAadhaar[language]}</strong></p>
-  <p><strong>3. {translations.waitVerification[language]}</strong></p>
-</div>
+              <p><strong>1. {translations.enterAadhaar[language]}</strong></p>
+              <p><strong>2. {translations.submitYourAadhaar[language]}</strong></p>
+              <p><strong>3. {translations.waitVerification[language]}</strong></p>
+            </div>
 
             <div className="aadhaar-form-container">
-          <form onSubmit={handleSubmit} className="aadhaar-form">
-            <input
-              type="text"
-              value={aadhar}
-              onChange={(e) => setAadharNumber(e.target.value)}
-              placeholder={translations.enterAadhaar[language]}
-            />
-            <button type="submit">{translations.submit[language]}</button>
-            {error && (
-              <p>
-                <i className="fa fa-exclamation-triangle" style={{ fontSize: '20px', color: 'red', marginRight: '8 px' }}></i>
-                {error}
-              </p>
-            )}
-          </form>
-        </div>
-      </div>
+              <form onSubmit={handleSubmit} className="aadhaar-form">
+                <input
+                  type="text"
+                  value={aadhar}
+                  onChange={(e) => setAadharNumber(e.target.value)}
+                  placeholder={translations.enterAadhaar[language]}
+                />
+                <button type="submit">{translations.submit[language]}</button>
+                {error && (
+                  <p>
+                    <i className="fa fa-exclamation-triangle" style={{ fontSize: '20px', color: 'red', marginRight: '8 px' }}></i>
+                    {error}
+                  </p>
+                )}
+              </form>
+            </div>
+          </div>
 
           {/* <div className="faq-section">
             <h2>{translations.faqs[language]}</h2>
@@ -127,15 +127,15 @@ function AadhaarInput() {
           </div>
         
        */}
-       </div>
-</div>
+        </div>
+      </div>
       <footer className="footer">
         <div className="text-container">
           <p>Copyright © 2022 Unique Identification Authority of India All Rights Reserved</p>
           <p>JavaScript must be enabled to access this site.</p>
           <p>Supports: Firefox 37+ Chrome OS: 6.0+ Internet Explorer 9.0+ Safari 4.0+</p>
           <p>Last reviewed and updated on: August 29, 2024</p>
-           </div>
+        </div>
         <img src={footer_icon} alt="footer_icon" />
       </footer>
     </div>
