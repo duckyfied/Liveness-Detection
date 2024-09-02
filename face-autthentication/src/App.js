@@ -11,6 +11,8 @@ import logo1 from './logo1.png';
 import logo2 from './logo2.svg';
 import footer_icon from './footer_icon.png';
 import { translations } from './translations';
+
+
 function App() {
   const [encoding, setEncoding] = useState(null);
 

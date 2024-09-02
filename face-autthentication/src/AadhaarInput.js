@@ -41,7 +41,11 @@ function AadhaarInput() {
   };
   return (
     <div>
-      
+      <div className="language-toggle">
+        <button onClick={() => handleLanguageChange('en')}>English</button>
+        <button onClick={() => handleLanguageChange('hi')}>हिन्दी</button>
+        <button onClick={() => handleLanguageChange('tm')}>தமிழ்</button>
+      </div>
       <div className="content">
         <div className="main-container">
           <h1>{translations.title[language]}</h1>

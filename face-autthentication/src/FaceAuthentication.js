@@ -20,7 +20,9 @@ function FaceAuthentication() {
   const [countdown, setCountdown] = useState(5);
   const location = useLocation();
   const navigate = useNavigate();
-  const language = location.state?.language || "en";
+  const [language, setLanguage] = useState("en");
+  
+  
   
   useEffect(() => {
     const { state } = location;
@@ -185,7 +187,7 @@ function FaceAuthentication() {
 
   return (
     <div className="App">
-      {/* <h1>Face Authentication</h1> */}
+     
       <div className="FaceAuthentication-container">
         <div className="Webcam-container">
           <Webcam
