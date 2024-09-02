@@ -58,7 +58,6 @@ function App() {
   return (
     <Router>      
       <ConditionalBackgroundMonitor />
-      <ConditionalPhotoOnPhoto />
       <Routes>
         <Route
           path="/"

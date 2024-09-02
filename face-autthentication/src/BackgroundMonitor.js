@@ -2,8 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import * as ort from "onnxruntime-web";
 import { useLocation } from "react-router-dom";
+import { openDB, getModelFromDB, saveModelToDB } from "./indexedDB"; // Adjust path as needed
 
 const MODEL_URL = "/model/facenet_simplified.onnx"; // Path to your ONNX model
+const DB_NAME = "ModelCacheDB";
+const STORE_NAME = "models";
+const MODEL_KEY = "facenet_model";
+
+// const MODEL_URL = "/model/facenet_simplified.onnx"; // Path to your ONNX model
 
 const BackgroundMonitor = () => {
   const [model, setModel] = useState(null);
@@ -16,12 +22,33 @@ const BackgroundMonitor = () => {
   useEffect(() => {
     const loadModel = async () => {
       try {
-        const session = await ort.InferenceSession.create(MODEL_URL);
+        // Open or create the IndexedDB database
+        const db = await openDB(DB_NAME, STORE_NAME);
+
+        // Attempt to load the model from IndexedDB
+        let session = await getModelFromDB(db, STORE_NAME, MODEL_KEY);
+
+        if (session) {
+          // If the model is found in IndexedDB, create a session from the binary data
+          session = await ort.InferenceSession.create(session);
+          console.log("Loaded model from IndexedDB.");
+        } else {
+          // If not found, fetch the model from the server
+          const modelBytes = await (await fetch(MODEL_URL)).arrayBuffer();
+          session = await ort.InferenceSession.create(modelBytes);
+
+          // Save the fetched model to IndexedDB for future use
+          await saveModelToDB(db, STORE_NAME, MODEL_KEY, modelBytes);
+          console.log("Downloaded model and saved to IndexedDB.");
+        }
+
+        // Set the model in the state
         setModel(session);
       } catch (error) {
         console.error("Error loading model:", error);
       }
     };
+
     loadModel();
   }, []);
 

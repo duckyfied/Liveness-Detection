@@ -3,39 +3,84 @@
 export const translations = {
     title: {
       en: "Aadhaar Face Liveness Authentication",
-      hi: "आधार फेस लाइवनेस प्रमाणीकरण"
+      hi: "आधार फेस लाइवनेस प्रमाणीकरण",
+      tm: "ஆதார் ஃபேஸ் லைவ்னெஸ் அங்கீகாரம்"
+
     },
     instructions: {
       en: "Instructions for Aadhaar Authentication Using Face Liveness Detection",
-      hi: "फेस लाइवनेस डिटेक्शन का उपयोग करके आधार प्रमाणीकरण के लिए निर्देश"
+      hi: "फेस लाइवनेस डिटेक्शन का उपयोग करके आधार प्रमाणीकरण के लिए निर्देश",
+      tm: "ஃபேஸ் லைவ்னஸ் கண்டறிதலைப் பயன்படுத்தி ஆதார் அங்கீகாரத்திற்கான வழிமுறைகள்"
     },
       enterAadhaar: {
         en: "Enter Aadhaar Number",
-        hi: "आधार संख्या दर्ज करें"
+        hi: "आधार संख्या दर्ज करें",
+        tm: "ஆதார் எண்ணை உள்ளிடவும்"
       },
       submitYourAadhaar: {
         en: "Submit Your Aadhaar Number and Grant Camera Access",
-        hi: "अपना आधार नंबर जमा करें और कैमरा एक्सेस अनुमति दें"
+        hi: "अपना आधार नंबर जमा करें और कैमरा एक्सेस अनुमति दें",
+        tm: "உங்கள் ஆதார் எண்ணைச் சமர்ப்பிக்கவும் மற்றும் கேமரா அணுகலை வழங்கவும்"
       },
 
       waitVerification: {
         en: "Wait for Verification and Receive Result",
-        hi: "सत्यापन की प्रतीक्षा करें और परिणाम प्राप्त करें"
+        hi: "सत्यापन की प्रतीक्षा करें और परिणाम प्राप्त करें",
+        tm: "சரிபார்ப்புக்காக காத்திருந்து முடிவைப் பெறவும்"
       },
     
     enterAadhaar: {
       en: "Enter Aadhaar Number",
-      hi: "आधार संख्या दर्ज करें"
+      hi: "आधार संख्या दर्ज करें",
+      tm: "ஆதார் எண்ணை உள்ளிடவும்"
     },
     submit: {
       en: "Submit",
-      hi: "जमा करें"
+      hi: "जमा करें",
+      tm: "சமர்ப்பிக்கவும்"
     },
     errorMessage: {
       en: "Failed to fetch user data",
-      hi: "उपयोगकर्ता डेटा प्राप्त करने में विफल"
+      hi: "उपयोगकर्ता डेटा प्राप्त करने में विफल",
+      tm: "பயனர் தரவைப் பெறுவதில் தோல்வி"
     },
-    // faqs: {
+
+  myAadhar: {
+    en: "My Aadhar",
+    hi: "मेरा आधार",
+    tm: "எனது ஆதார்"
+  },
+  aboutUIDAI: {
+    en: "About UIDAI",
+    hi: "UIDAI के बारे में",
+    tm: "UIDAI பற்றி"
+  },
+  ecosystem: {
+    en: "Ecosystem",
+    hi: "इकोसिस्टम",
+    tm: "சுற்றுச்சூழல் அமைப்பு"
+  },
+  mediaAndResources: {
+    en: "Media and Resources",
+    hi: "मीडिया और संसाधन",
+    tm: "ஊடகம் மற்றும் வளங்கள்"
+  },
+  contactAndResources: {
+    en: "Contact and Resources",
+    hi: "संपर्क और संसाधन",
+    tm: "தொடர்பு மற்றும் ஆதாரங்கள்"
+  },
+  searchPlaceholder: {
+    en: "Search...",
+    hi: "खोजें...",
+    tm: "தேடு..."
+  },
+  goButton: {
+    en: "Go",
+    hi: "जाएं",
+    tm: "போ"
+  }
+      // faqs: {
     //   en: "Frequently Asked Questions",
     //   hi: "अक्सर पूछे जाने वाले प्रश्न"
     // },
@@ -119,36 +164,5 @@ export const translations = {
     //   en: "If you encounter any technical issues, ensure your browser is up to date, and try refreshing the page. If the issue persists, reach out to customer support for further assistance.",
     //   hi: "अगर आपको किसी तकनीकी समस्या का सामना करना पड़ता है, तो सुनिश्चित करें कि आपका ब्राउज़र अद्यतित है, और पेज को रिफ्रेश करने का प्रयास करें। अगर समस्या बनी रहती है, तो आगे की सहायता के लिए ग्राहक समर्थन से संपर्क करें।"
     // },
-    // Header translations
-  myAadhar: {
-    en: "My Aadhar",
-    hi: "मेरा आधार"
-  },
-  aboutUIDAI: {
-    en: "About UIDAI",
-    hi: "UIDAI के बारे में"
-  },
-  ecosystem: {
-    en: "Ecosystem",
-    hi: "इकोसिस्टम"
-  },
-  mediaAndResources: {
-    en: "Media and Resources",
-    hi: "मीडिया और संसाधन"
-  },
-  contactAndResources: {
-    en: "Contact and Resources",
-    hi: "संपर्क और संसाधन"
-  },
-  searchPlaceholder: {
-    en: "Search...",
-    hi: "खोजें..."
-  },
-  goButton: {
-    en: "Go",
-    hi: "जाएं"
-  }
-  
-  // Add more translations for other elements as needed
   };
   
