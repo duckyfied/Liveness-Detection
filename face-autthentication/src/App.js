@@ -101,8 +101,8 @@ function App() {
         <img src={footer_icon} alt="footer_icon" />
       </footer>
 <ConditionalBackgroundMonitor />
-      <ConditionalBackgroundMonitor />
-      <ConditionalPhotoOnPhoto />
+<ConditionalPhotoOnPhoto />
+
       <Routes>
         <Route
           path="/"
