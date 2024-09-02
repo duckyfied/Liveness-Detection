@@ -3,7 +3,7 @@ import * as ort from "onnxruntime-web";
 import Webcam from "react-webcam";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./faceauth.css";
-
+import { translations } from './translations';
 const MODEL_URL = "/model/facenet_simplified.onnx";
 
 function FaceAuthentication() {
@@ -16,7 +16,8 @@ function FaceAuthentication() {
   const [countdown, setCountdown] = useState(5);
   const location = useLocation();
   const navigate = useNavigate();
-
+  const language = location.state?.language || "en";
+  
   useEffect(() => {
     const { state } = location;
     if (state && state.userData) {
@@ -171,17 +172,17 @@ function FaceAuthentication() {
         <div className="Auth-details-container">
           {authenticatedName && aadharNumber && (
             <>
-              <h2>Welcome, {authenticatedName}</h2>
-              <p>Aadhaar Number: {aadharNumber}</p>
-              <button className="b1" onClick={handleCaptureAndCheck}>
-                Capture & Check
-              </button>
+              <h2>{translations.welcomeMessage[language]} {authenticatedName}</h2>
+<p>{translations.aadhaarNumberLabel[language]} {aadharNumber}</p>
+<button className="b1" onClick={handleCaptureAndCheck}>
+  {translations.captureAndCheckButton[language]}
+</button>
             </>
           )}
           {authenticationMessage && (
             <div>
               <h2>{authenticationMessage}</h2>
-              <p>Redirecting in {countdown} seconds...</p>
+              <p>{translations.redirectingMessage[language]} {countdown} {translations.secondsLabel[language]}</p>
             </div>
           )}
         </div>

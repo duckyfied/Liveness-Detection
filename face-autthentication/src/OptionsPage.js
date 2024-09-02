@@ -1,14 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./options.css";
+import { translations } from './translations';
+
 
 function OptionsPage() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { userData } = location.state || {};
-  const encoding = userData
-    ? new Float32Array(JSON.parse(userData.encoding))
-    : null;
+  const [language, setLanguage] = useState("en");
 
   const handleGazeTest = () => {
     navigate("/gaze-mouse");
@@ -17,6 +15,12 @@ function OptionsPage() {
   const handleLeftRightTest = () => {
     navigate("/left-right");
   };
+  const location = useLocation();
+  const { userData } = location.state || {};
+  
+  const encoding = userData
+    ? new Float32Array(JSON.parse(userData.encoding))
+    : null;
 
   const handleMonitoringFailure = () => {
     console.log("Background monitoring failed.");
@@ -33,20 +37,23 @@ function OptionsPage() {
 
     // Optionally log the failure (e.g., to an analytics service or server)
     // axios.post('/api/log', { error: "Background monitoring failed" });
+    
   };
 
   return (
     <div className="App">
       <div className="Options-container">
-        <h4 className="ab">Select a Test</h4>
+        <h4 className="ab">{translations.selectTest[language]}</h4>
         <button className="Option-button" onClick={handleGazeTest}>
-          Gaze Test
+          {translations.gazeTest[language]}
         </button>
         <button className="Option-button" onClick={handleLeftRightTest}>
-          Left Right Test
+          {translations.leftRightTest[language]}
         </button>
       </div>
+      
     </div>
+
   );
 }
 
