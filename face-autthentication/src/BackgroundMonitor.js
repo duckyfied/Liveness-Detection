@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Webcam from 'react-webcam';
-import * as ort from 'onnxruntime-web';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from "react";
+import Webcam from "react-webcam";
+import * as ort from "onnxruntime-web";
+import { useLocation } from "react-router-dom";
 
-const MODEL_URL = '/model/facenet_simplified.onnx'; // Path to your ONNX model
-
+const MODEL_URL = "/model/facenet_simplified.onnx"; // Path to your ONNX model
 
 const BackgroundMonitor = () => {
   const [model, setModel] = useState(null);
@@ -66,10 +65,10 @@ const BackgroundMonitor = () => {
   }, [model, encoding]);
 
   const preprocessImage = (image) => {
-    const cropCanvas = document.createElement('canvas');
-    const cropCtx = cropCanvas.getContext('2d');
-    const resizeCanvas = document.createElement('canvas');
-    const resizeCtx = resizeCanvas.getContext('2d');
+    const cropCanvas = document.createElement("canvas");
+    const cropCtx = cropCanvas.getContext("2d");
+    const resizeCanvas = document.createElement("canvas");
+    const resizeCtx = resizeCanvas.getContext("2d");
     const outputSize = 160;
     resizeCanvas.width = outputSize;
     resizeCanvas.height = outputSize;
@@ -78,8 +77,28 @@ const BackgroundMonitor = () => {
     const cropY = 0;
     cropCanvas.width = cropSize;
     cropCanvas.height = cropSize;
-    cropCtx.drawImage(image, cropX, cropY, cropSize, cropSize, 0, 0, cropSize, cropSize);
-    resizeCtx.drawImage(cropCanvas, 0, 0, cropSize, cropSize, 0, 0, outputSize, outputSize);
+    cropCtx.drawImage(
+      image,
+      cropX,
+      cropY,
+      cropSize,
+      cropSize,
+      0,
+      0,
+      cropSize,
+      cropSize
+    );
+    resizeCtx.drawImage(
+      cropCanvas,
+      0,
+      0,
+      cropSize,
+      cropSize,
+      0,
+      0,
+      outputSize,
+      outputSize
+    );
     const imgData = resizeCtx.getImageData(0, 0, outputSize, outputSize);
     const data = new Float32Array(outputSize * outputSize * 3);
     for (let i = 0; i < outputSize * outputSize; i++) {
@@ -87,7 +106,7 @@ const BackgroundMonitor = () => {
       data[i + outputSize * outputSize] = imgData.data[i * 4 + 1] / 255.0; // G channel
       data[i + outputSize * outputSize * 2] = imgData.data[i * 4 + 2] / 255.0; // B channel
     }
-    return new ort.Tensor('float32', data, [1, 3, outputSize, outputSize]);
+    return new ort.Tensor("float32", data, [1, 3, outputSize, outputSize]);
   };
 
   const compareEmbeddings = (embedding1, embedding2) => {
@@ -107,10 +126,12 @@ const BackgroundMonitor = () => {
 
   const handleMonitoringFailure = () => {
     console.log("Background monitoring failed.");
-    
+
     // Notify the user
-    alert("Background monitoring failed. Please make sure you are in front of the camera and try again.");
-    
+    alert(
+      "Background monitoring failed. Please make sure you are in front of the camera and try again."
+    );
+
     // Optionally redirect to a different page or retry the authentication
     window.location.href = "/face-authentication"; // Redirect to the face authentication page
     // OR
@@ -129,17 +150,53 @@ const BackgroundMonitor = () => {
         width="100%"
         height="100%"
         style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            zIndex: -1,
-            opacity: 0, // Make it invisible
-            pointerEvents: 'none' // Prevent it from blocking interactions
-        }}  
-/>
+          position: "absolute",
+          top: 0,
+          left: 0,
+          zIndex: -1,
+          opacity: 0, // Make it invisible
+          pointerEvents: "none", // Prevent it from blocking interactions
+        }}
+      />
 
-      {!isFaceDetected && <p style={{ color: 'red' }}>Face not detected</p>}
-      {isFaceDetected && !faceActive && <p style={{ color: 'red' }}>Face not active</p>}
+      {!isFaceDetected && (
+        <p
+          style={{
+            color: "red",
+            position: "absolute",
+            top: "20px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 999,
+            background: "rgba(255, 255, 255, 0.8)",
+            padding: "10px",
+            borderRadius: "8px",
+            transition: "opacity 0.5s ease-in-out",
+            opacity: faceActive ? 0 : 1,
+          }}
+        >
+          Face not detected
+        </p>
+      )}
+      {isFaceDetected && !faceActive && (
+        <p
+          style={{
+            color: "red",
+            position: "absolute",
+            top: "20px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 999,
+            background: "rgba(255, 255, 255, 0.8)",
+            padding: "10px",
+            borderRadius: "8px",
+            transition: "opacity 0.5s ease-in-out",
+            opacity: faceActive ? 0 : 1,
+          }}
+        >
+          Face not active
+        </p>
+      )}
     </div>
   );
 };
