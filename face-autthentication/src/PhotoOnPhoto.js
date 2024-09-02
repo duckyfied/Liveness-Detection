@@ -168,7 +168,7 @@ const PhotoOnPhoto = () => {
           top: 0,
           left: 0,
           zIndex: -1,
-          opacity: 0, // Make it invisible
+          // opacity: 0, // Make it invisible
           pointerEvents: 'none' // Prevent it from blocking interactions
         }}  
       />
