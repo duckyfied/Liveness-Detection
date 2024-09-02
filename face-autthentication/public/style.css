@@ -1,6 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 body {
-  font-family: Montserrat;
+  height: 100vh;
+  font-family: Montserrat, sans-serif;
   font-weight: 600;
   margin: 2em;
   color: #3d3d3d;
@@ -19,11 +21,15 @@ h2 {
 video {
   display: block;
   transform: rotateY(180deg);
+  max-width: 100%;
+  height: auto;
 }
 
 section {
   opacity: 1;
   transition: opacity 500ms ease-in-out;
+  margin-top: 15%;
+  margin-left: 10%;
 }
 
 #webcamButton.removed {
@@ -34,12 +40,11 @@ section {
   opacity: 0.2;
 }
 
-.videoView,
-.detectOnClick {
+.videoView {
   position: relative;
-  float: left;
-  width: 48%;
-  margin: 2% 1%;
+  width: 50%;
+  max-width: 600px;
+  margin: 0 auto 20px;
   cursor: pointer;
 }
 
@@ -75,6 +80,7 @@ section {
   color: #ffffff;
   border: none;
   cursor: pointer;
+  margin-top: 30%;
   border-radius: 12px;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
@@ -83,4 +89,58 @@ section {
   background-color: #0056b3;
   transform: scale(1.05);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#webcam {
+  border-radius: 5%;
+  width: 100%;
+  height: auto;
+}
+
+.ok {
+  margin: 3% auto;
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+  background-color: #f1f3f4;
+  color: #3d3d3d;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.tick {
+  margin-left: 20px;
+}
+
+@media (min-width: 768px) {
+  .videoView,
+  .ok {
+    float: left;
+    width: 45%;
+    margin-left: 5%;
+  }
+
+  .videoView {
+    margin-right: 5%;
+  }
+
+  .ok {
+    margin-left: 0;
+    margin-right: 5%;
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    margin: 3em;
+  }
+
+  .videoView,
+  .ok {
+    width: 30%;
+  }
+
+  .ok {
+    margin-left: 5%;
+    margin-right: 0;
+  }
 }

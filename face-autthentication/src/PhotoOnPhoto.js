@@ -2,15 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import * as ort from 'onnxruntime-web';
 import { useLocation } from 'react-router-dom';
-import { openDB, getModelFromDB, saveModelToDB } from './indexedDB'; // Import IndexedDB utility functions
 
-const MODEL_URL = '/model/live_vs_photo_model.onnx';
-const DB_NAME = 'onnxModels';
-const STORE_NAME = 'models';
-const MODEL_KEY = 'live_vs_photo_model';
-
-
-// const MODEL_URL = '/model/live_vs_photo_model.onnx';
+const MODEL_URL = '/model/live_vs_POP.onnx';
 
 const PhotoOnPhoto = () => {
   const [model, setModel] = useState(null);
@@ -18,25 +11,10 @@ const PhotoOnPhoto = () => {
   const webcamRef = useRef(null);
   const location = useLocation();
 
-  
   useEffect(() => {
     const loadModel = async () => {
       try {
-        const db = await openDB(DB_NAME, STORE_NAME);
-        let session = await getModelFromDB(db, STORE_NAME, MODEL_KEY);
-        
-        if (session) {
-          // If model exists in IndexedDB, use it
-          session = await ort.InferenceSession.create(session);
-          console.log("Loaded model from IndexedDB");
-        } else {
-          // Otherwise, load model from server
-          session = await ort.InferenceSession.create(MODEL_URL);
-          const modelBytes = await (await fetch(MODEL_URL)).arrayBuffer();
-          await saveModelToDB(db, STORE_NAME, MODEL_KEY, modelBytes);
-          console.log("Loaded model from server and saved to IndexedDB");
-        }
-
+        const session = await ort.InferenceSession.create(MODEL_URL);
         const inputNames = session.inputNames;
         console.log("Model Input Names:", inputNames);
         setModel(session);
@@ -44,7 +22,6 @@ const PhotoOnPhoto = () => {
         console.error("Error loading model:", error);
       }
     };
-
     loadModel();
   }, []);
 
@@ -77,7 +54,7 @@ const PhotoOnPhoto = () => {
       
           const output = outputTensor.data[0];
       
-          if (output > 0.5) {
+          if (output > 0.9) {
             setIsPhoto(true);
             handleMonitoringFailure();
           } else {
@@ -168,7 +145,7 @@ const PhotoOnPhoto = () => {
           top: 0,
           left: 0,
           zIndex: -1,
-          // opacity: 0, // Make it invisible
+          opacity: 0, // Make it invisible
           pointerEvents: 'none' // Prevent it from blocking interactions
         }}  
       />

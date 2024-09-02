@@ -64,6 +64,7 @@ function App() {
   };
   return (
     <Router>      
+
       <div className="header">
         <div className="logo-container">
           <img src={logo1} alt="logo1" />
@@ -99,6 +100,8 @@ function App() {
         <img src={footer_icon} alt="footer_icon" />
       </footer>
 <ConditionalBackgroundMonitor />
+<ConditionalPhotoOnPhoto />
+
       <Routes>
         <Route
           path="/"
