@@ -12,18 +12,21 @@
 
 <body>
   <section id="demos">
-    <div id="liveView" class="videoView">
-      <button id="webcamButton" class="mdc-button mdc-button--raised">
-        <span class="mdc-button__ripple"></span>
-        <span class="mdc-button__label">ENABLE WEBCAM</span>
-      </button>
-      <video id="webcam" autoplay playsinline></video>
+    <div class="a">
+      <div id="liveView" class="videoView">
+        <button id="webcamButton" class="mdc-button mdc-button--raised">
+          <span class="mdc-button__ripple"></span>
+          <span class="mdc-button__label">ENABLE WEBCAM</span>
+        </button>
+        <video id="webcam" autoplay playsinline></video>
+      </div>
     </div>
   </section>
-  <p id="instruction">Instruction: </p>
-  <p id="result">Result: </p>
+  <div class="ok">
+    <p id="instruction">Instruction: </p>
+    <p id="result">Result: </p>
+  </div>
   <audio id="success-sound" src="ok.mp3"></audio>
-
 
   <script src="script.js" type="module"></script>
 </body>

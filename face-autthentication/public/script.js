@@ -122,29 +122,29 @@ function displayVideoDetections(detections) {
     (bestDetection.boundingBox.width - 10) +
     "px;";
 
-  const highlighter = document.createElement("div");
-  highlighter.setAttribute("class", "highlighter");
-  highlighter.style =
-    "left: " +
-    (video.offsetWidth -
-      bestDetection.boundingBox.width -
-      bestDetection.boundingBox.originX) +
-    "px;" +
-    "top: " +
-    bestDetection.boundingBox.originY +
-    "px;" +
-    "width: " +
-    (bestDetection.boundingBox.width - 10) +
-    "px;" +
-    "height: " +
-    bestDetection.boundingBox.height +
-    "px;";
+  // const highlighter = document.createElement("div");
+  // highlighter.setAttribute("class", "highlighter");
+  // highlighter.style =
+  //   "left: " +
+  //   (video.offsetWidth -
+  //     bestDetection.boundingBox.width -
+  //     bestDetection.boundingBox.originX) +
+  //   "px;" +
+  //   "top: " +
+  //   bestDetection.boundingBox.originY +
+  //   "px;" +
+  //   "width: " +
+  //   (bestDetection.boundingBox.width - 10) +
+  //   "px;" +
+  //   "height: " +
+  //   bestDetection.boundingBox.height +
+  //   "px;";
 
-  liveView.appendChild(highlighter);
-  liveView.appendChild(p);
+  // liveView.appendChild(highlighter);
+  // liveView.appendChild(p);
 
-  children.push(highlighter);
-  children.push(p);
+  // children.push(highlighter);
+  // children.push(p);
 
   const keypoints = bestDetection.keypoints;
   keypoints.forEach((keypoint, index) => {
@@ -185,7 +185,7 @@ function displayVideoDetections(detections) {
       ans = "STRAIGHT";
     }
 
-    instructionEl.innerText = ans;
+    //instructionEl.innerText = ans;
     instructionEl.style.position = "absolute";
     instructionEl.style.left = `${
       video.offsetWidth -
@@ -198,45 +198,45 @@ function displayVideoDetections(detections) {
     liveView.appendChild(instructionEl);
     children.push(instructionEl);
 
-    const distanceEl3to5 = document.createElement("p");
-    distanceEl3to5.className = "distance";
-    distanceEl3to5.innerText = `Distance between Point 3 and Point 5: ${distance3to5.toFixed(
-      2
-    )}`;
-    distanceEl3to5.style.position = "absolute";
-    distanceEl3to5.style.left = `${
-      video.offsetWidth -
-      bestDetection.boundingBox.width -
-      bestDetection.boundingBox.originX
-    }px`;
-    distanceEl3to5.style.top = `${
-      bestDetection.boundingBox.originY + bestDetection.boundingBox.height + 10
-    }px`;
-    liveView.appendChild(distanceEl3to5);
-    children.push(distanceEl3to5);
+    // const distanceEl3to5 = document.createElement("p");
+    // distanceEl3to5.className = "distance";
+    // distanceEl3to5.innerText = `Distance between Point 3 and Point 5: ${distance3to5.toFixed(
+    //   2
+    // )}`;
+    // distanceEl3to5.style.position = "absolute";
+    // distanceEl3to5.style.left = `${
+    //   video.offsetWidth -
+    //   bestDetection.boundingBox.width -
+    //   bestDetection.boundingBox.originX
+    // }px`;
+    // distanceEl3to5.style.top = `${
+    //   bestDetection.boundingBox.originY + bestDetection.boundingBox.height + 10
+    // }px`;
+    // liveView.appendChild(distanceEl3to5);
+    // children.push(distanceEl3to5);
 
-    const distanceEl3to6 = document.createElement("p");
-    distanceEl3to6.className = "distance";
-    distanceEl3to6.innerText = `Distance between Point 3 and Point 6: ${distance3to6.toFixed(
-      2
-    )}`;
-    distanceEl3to6.style.position = "absolute";
-    distanceEl3to6.style.left = `${
-      video.offsetWidth -
-      bestDetection.boundingBox.width -
-      bestDetection.boundingBox.originX
-    }px`;
-    distanceEl3to6.style.top = `${
-      bestDetection.boundingBox.originY + bestDetection.boundingBox.height + 30
-    }px`;
-    liveView.appendChild(distanceEl3to6);
-    children.push(distanceEl3to6);
+    // const distanceEl3to6 = document.createElement("p");
+    // distanceEl3to6.className = "distance";
+    // distanceEl3to6.innerText = `Distance between Point 3 and Point 6: ${distance3to6.toFixed(
+    //   2
+    // )}`;
+    // distanceEl3to6.style.position = "absolute";
+    // distanceEl3to6.style.left = `${
+    //   video.offsetWidth -
+    //   bestDetection.boundingBox.width -
+    //   bestDetection.boundingBox.originX
+    // }px`;
+    // distanceEl3to6.style.top = `${
+    //   bestDetection.boundingBox.originY + bestDetection.boundingBox.height + 30
+    // }px`;
+    // liveView.appendChild(distanceEl3to6);
+    // children.push(distanceEl3to6);
   }
 }
 
 let currentIndex = 0;
 function processInstruction() {
-  console.log(instructionList)
+  console.log(instructionList);
   if (currentIndex < instructionList.length) {
     let currentInstruction = instructionList[currentIndex];
     document.getElementById(
@@ -249,18 +249,18 @@ function processInstruction() {
       document.getElementById("result").innerText = `Result: OK`;
 
       // Play the success sound
-      if(ans != "STRAIGHT"){
+      if (ans != "STRAIGHT") {
         let successSound = document.getElementById("success-sound");
         successSound.play();
 
         let tickEl = document.createElement("p");
         tickEl.innerText = "✔";
+        tickEl.className = "tick";
         document.body.appendChild(tickEl);
       }
 
       currentIndex++;
     } else {
-      
       document.getElementById("result").innerText =
         "Result: Move in the intended direction please!";
     }
