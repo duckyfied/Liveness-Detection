@@ -1,11 +1,13 @@
 .App {
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100vh; /* Full viewport height */
+  justify-content: flex-start; /* Align items to the start (left) */
+  height: 100vh;
   margin: 0;
-  text-align: center;
+  text-align: center; /* This will affect only the text inside, not the layout */
 }
+
+
 
 .Options-container {
   display: flex;
@@ -49,3 +51,5 @@
     font-size: 14px;
   }
 }
+
+

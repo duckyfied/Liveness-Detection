@@ -17,20 +17,10 @@ function App() {
 
   const handleMonitoringFailure = () => {
     console.log("Background monitoring failed.");
-
-    // Notify the user
     alert("Background monitoring failed. Please make sure you are in front of the camera and try again.");
-
-    // Optionally redirect to a different page or retry the authentication
-    window.location.href = "/face-authentication"; // Redirect to the face authentication page
-    // OR
-    // setAuthenticationMessage("Background monitoring failed. Please try again."); // Show a message in the UI
-
-    // Optionally log the failure (e.g., to an analytics service or server)
-    // axios.post('/api/log', { error: "Background monitoring failed" });
+    window.location.href = "/face-authentication";
   };
 
-  // Component to conditionally render BackgroundMonitor based on the route
   const ConditionalBackgroundMonitor = () => {
     const location = useLocation();
     const shouldRenderMonitor = [
@@ -52,23 +42,27 @@ function App() {
       "/left-right"
     ].includes(location.pathname);
 
-    return shouldRenderMonitor ? <PhotoOnPhoto/> : null;
+    return shouldRenderMonitor ? <PhotoOnPhoto /> : null;
+  };
+
+  const [language, setLanguage] = useState("en");
+
+  const handleLanguageChange = (lang) => {
+    setLanguage(lang);
   };
 
   return (
-    <Router>      
-      <ConditionalBackgroundMonitor />
-      <ConditionalPhotoOnPhoto />
+    <Router>
       <Routes>
-        <Route
-          path="/"
-          element={<AadhaarInput setEncoding={handleEncoding} />}
-        />
+        <Route path="/" element={<AadhaarInput setEncoding={handleEncoding} />} />
         <Route path="/face-authentication" element={<FaceAuthentication />} />
         <Route path="/options" element={<OptionsPage />} />
         <Route path="/gaze-mouse" element={<GazeMouse />} />
         <Route path="/left-right" element={<LeftRight />} />
       </Routes>
+      
+      <ConditionalBackgroundMonitor />
+      <ConditionalPhotoOnPhoto />
     </Router>
   );
 }

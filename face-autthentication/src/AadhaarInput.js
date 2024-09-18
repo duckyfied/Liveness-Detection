@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./AadhaarInput.css";
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import { translations } from './translations';
 import logo1 from './logo1.png';
 import logo2 from './logo2.svg';
 import footer_icon from './footer_icon.png';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import { translations } from './translations';
 
 function AadhaarInput() {
   const [aadhar, setAadharNumber] = useState("");
   const [error, setError] = useState("");
   const [activeIndex, setActiveIndex] = useState(null);
-  const [language, setLanguage] = useState("en");
   const navigate = useNavigate();
+  const [language, setLanguage] = useState("en");
 
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
@@ -24,14 +24,9 @@ function AadhaarInput() {
     try {
       const response = await axios.post("/api/v1/user", { aadhar });
       if (response.data && response.data.data) {
-        // Navigate to FaceAuthentication with state
-        navigate("/face-authentication", {
-          state: { userData: response.data.data },
-        });
+        navigate("/face-authentication", { state: { userData: response.data.data } });
       } else {
-        window.alert(
-          "The entered Aadhar number is invalid. Kindly re-enter your Aadhar number"
-        );
+        window.alert("The entered Aadhar number is invalid. Kindly re-enter your Aadhar number");
       }
     } catch (err) {
       setError(translations.errorMessage[language]);
@@ -44,6 +39,7 @@ function AadhaarInput() {
 
   return (
     <div>
+      {/* Header */}
       <div className="header">
         <div className="logo-container">
           <img src={logo1} alt="logo1" />
@@ -64,12 +60,14 @@ function AadhaarInput() {
         </nav>
       </div>
 
+      {/* Translation toggle */}
       <div className="language-toggle">
         <button onClick={() => handleLanguageChange('en')}>English</button>
         <button onClick={() => handleLanguageChange('hi')}>हिन्दी</button>
         <button onClick={() => handleLanguageChange('tm')}>தமிழ்</button>
       </div>
 
+      {/* Main content */}
       <div className="content">
         <div className="main-container">
           <h1>{translations.title[language]}</h1>
@@ -93,43 +91,17 @@ function AadhaarInput() {
                 <button type="submit">{translations.submit[language]}</button>
                 {error && (
                   <p>
-                    <i className="fa fa-exclamation-triangle" style={{ fontSize: '20px', color: 'red', marginRight: '8 px' }}></i>
+                    <i className="fa fa-exclamation-triangle" style={{ fontSize: '20px', color: 'red', marginRight: '8px' }}></i>
                     {error}
                   </p>
                 )}
               </form>
             </div>
           </div>
-
-          {/* <div className="faq-section">
-            <h2>{translations.faqs[language]}</h2>
-            {[
-              { question: translations.faq1[language], answer: translations.faq1Answer[language] },
-              { question: translations.faq2[language], answer: translations.faq2Answer[language] },
-              { question: translations.faq3[language], answer: translations.faq3Answer[language] },
-              { question: translations.whatToDoIfLivenessFails[language], answer: translations.livenessFailsDetails[language] },
-              { question: translations.isDataSecure[language], answer: translations.dataSecureDetails[language] },
-              { question: translations.useOnMobileDevice[language], answer: translations.mobileDeviceDetails[language] },
-              { question: translations.noCameraOnDevice[language], answer: translations.noCameraDetails[language] },
-              { question: translations.verificationTime[language], answer: translations.verificationTimeDetails[language] },
-              { question: translations.ensureSuccessfulAuthentication[language], answer: translations.successfulAuthenticationDetails[language] },
-              { question: translations.technicalIssues[language], answer: translations.technicalIssuesDetails[language] },
-            ].map((faq, index) => (
-              <div className="faq-item" key={index}>
-                <div className="faq-question" onClick={() => handleFaqToggle(index)}>
-                  {faq.question}
-                  <span className={activeIndex === index ? "toggle-icon active" : "toggle-icon"}>+</span>
-                </div>
-                <div className={`expandable ${activeIndex === index ? "show" : ""}`}>
-                  <p>{faq.answer}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        
-       */}
         </div>
       </div>
+
+      {/* Footer */}
       <footer className="footer">
         <div className="text-container">
           <p>Copyright © 2022 Unique Identification Authority of India All Rights Reserved</p>
