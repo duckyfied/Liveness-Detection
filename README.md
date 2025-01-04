@@ -38,6 +38,6 @@ Make sure you have the following installed on your machine:
 
 
 ## Prototype
-<img width="959" alt="image" src="https://github.com/user-attachments/assets/e5575665-5094-4840-8084-48176ce80859">
 
-   
+   ![Screenshot From 2025-01-05 00-01-04](https://github.com/user-attachments/assets/b173ae65-47ae-4510-8dee-b9e35782a816)
+
